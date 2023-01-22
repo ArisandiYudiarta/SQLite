@@ -9,10 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.ColorSpace;
 import android.net.Uri;
 import android.os.Bundle;
-<<<<<<< HEAD
-=======
 import android.provider.MediaStore;
->>>>>>> e99d379e12cf02c7fe8e4901c5ed860fc4d0c910
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,7 +65,7 @@ public class AddHewan extends AppCompatActivity {
                         jk.getText().toString().trim(),
                         Integer.valueOf(umur.getText().toString().trim()),
                         img.getText().toString().trim(),
-                        img_data;
+                        img_data);
             }
         });
     }
@@ -113,6 +110,5 @@ public class AddHewan extends AppCompatActivity {
         }catch (Exception e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
->>>>>>> e99d379e12cf02c7fe8e4901c5ed860fc4d0c910
     }
 }

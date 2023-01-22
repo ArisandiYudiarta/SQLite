@@ -65,7 +65,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_NAME, nama);
         cv.put(COLUMN_BREED, breed);
         cv.put(COLUMN_GENDER, jk);
-        (COLUMN_AGE, umur);
+        cv.put(COLUMN_AGE, umur);
         cv.put(COLUMN_IMAGE_NAME, img_name);
         cv.put(COLUMN_IMAGE_FILE, img_data);
 //        cv.put(COLUMN_WEIGHT, berat);
