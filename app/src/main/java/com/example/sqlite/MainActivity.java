@@ -6,11 +6,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     MyDatabaseHelper myDB;
 
-    ArrayList<String> id_hewan, nama_hewan, breed, jk, umur;
+    ArrayList<String> id_hewan, nama_hewan, breed, jk, umur, img_name;
+    ArrayList<ModelClass> img_data = new ArrayList<>();
     RecyclerAdapter recyclerAdapter;
 
     @Override
@@ -43,10 +48,12 @@ public class MainActivity extends AppCompatActivity {
         breed = new ArrayList<>();
         jk = new ArrayList<>();
         umur = new ArrayList<>();
+        img_name = new ArrayList<>();
+        img_data = new ArrayList<>();
 
         storeDataInArray();
 
-        recyclerAdapter = new RecyclerAdapter( MainActivity.this, id_hewan, nama_hewan, breed, jk, umur);
+        recyclerAdapter = new RecyclerAdapter( MainActivity.this, id_hewan, nama_hewan, breed, jk, umur, img_name, img_data);
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
@@ -62,6 +69,15 @@ public class MainActivity extends AppCompatActivity {
                 breed.add(cursor.getString(2));
                 jk.add(cursor.getString(3));
                 umur.add(cursor.getString(4));
+                img_name.add(cursor.getString(5));
+                String img_name_string = cursor.getString(5);
+                byte[] imageBytes = cursor.getBlob(6);
+
+                Bitmap objBitmap = BitmapFactory.decodeByteArray(imageBytes, 0,imageBytes.length);
+                img_data.add(new ModelClass(img_name_string, objBitmap));
+
+//                img_data.add(cursor.getBlob(6));
+
             }
         }
     }

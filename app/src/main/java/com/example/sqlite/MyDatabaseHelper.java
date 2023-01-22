@@ -79,7 +79,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-
+    //dipanggil di file mainadtivity, di function store data in array
     Cursor readTblHewan(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
