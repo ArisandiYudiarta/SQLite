@@ -26,6 +26,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 //    private static final String COLUMN_HEIGHT = "tinggi";
 //    private static final String COLUMN_STORY = "pet_story";
 
+    private static final String TABLE_NAME2 = "history_adopsi";
+
+    private static final String COLUMN_ID2 = "id_hewan";
+    private static final String COLUMN_NAME2 = "nama_hewan";
+    private static final String COLUMN_BREED2 = "breed";
+    private static final String COLUMN_GENDER2 = "jk";
+    private static final String COLUMN_AGE2 = "age";
+
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -39,12 +47,22 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                         COLUMN_BREED + " TEXT, " +
                         COLUMN_GENDER + " TEXT, " +
                         COLUMN_AGE + " INTEGER);";
+
+        String query2 = "CREATE TABLE " + TABLE_NAME +
+                " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_NAME + " TEXT, " +
+                COLUMN_BREED + " TEXT, " +
+                COLUMN_GENDER + " TEXT, " +
+                COLUMN_AGE + " INTEGER);";
+
         db.execSQL(query);
+        db.execSQL(query2);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME2);
         onCreate(db);
     }
 
@@ -63,5 +81,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }else{
             Toast.makeText(context, "Added Successfuly.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    Cursor readAllData(){
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(db != null){
+            cursor = db. rawQuery(query, null);
+        }
+        return cursor;
     }
 }
