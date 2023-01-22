@@ -21,9 +21,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_BREED = "breed";
     private static final String COLUMN_GENDER = "jk";
     private static final String COLUMN_AGE = "umur";
-    private static final String COLUMN_WEIGHT = "berat";
-    private static final String COLUMN_HEIGHT = "tinggi";
-    private static final String COLUMN_STORY = "pet_story";
+//    private static final String COLUMN_WEIGHT = "berat";
+//    private static final String COLUMN_HEIGHT = "tinggi";
+//    private static final String COLUMN_STORY = "pet_story";
 
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -32,16 +32,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = "CREATE TABLE " + TABLE_NAME +
-                        " (" + COLUMN_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        String qTableHistoryAdopsi = "CREATE TABLE ";
+
+        String qTableHewanAdopsi  = "CREATE TABLE " + TABLE_NAME +
+                        " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_NAME + " TEXT, " +
-                        COLUMN_BREED + "TEXT, " +
-                        COLUMN_GENDER + "TEXT, " +
-                        COLUMN_AGE + "INTEGER, " +
-                        COLUMN_WEIGHT + "INTEGER, " +
-                        COLUMN_HEIGHT + "INTEGER, " +
-                        COLUMN_STORY + "TEXT);";
-        db.execSQL(query);
+                        COLUMN_BREED + " TEXT, " +
+                        COLUMN_GENDER + " TEXT, " +
+                        COLUMN_AGE + " INTEGER);";
+        db.execSQL(qTableHewanAdopsi);
     }
 
     @Override
@@ -50,7 +49,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void addHewan(String nama, String breed, String jk, int umur,int berat, int tinggi, String story){
+    void addHewan(String nama, String breed, String jk, int umur){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -58,9 +57,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_BREED, breed);
         cv.put(COLUMN_GENDER, jk);
         cv.put(COLUMN_AGE, umur);
-        cv.put(COLUMN_WEIGHT, berat);
-        cv.put(COLUMN_HEIGHT, tinggi);
-        cv.put(COLUMN_STORY, story);
+//        cv.put(COLUMN_WEIGHT, berat);
+//        cv.put(COLUMN_HEIGHT, tinggi);
+//        cv.put(COLUMN_STORY, story);
         long result = db.insert(TABLE_NAME, null, cv);
         if(result == -1){
             Toast.makeText(context, "Initial Insert Fails.", Toast.LENGTH_SHORT).show();
