@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.ColorSpace;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,11 +16,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+
 public class AddHewan extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST  = 100;
+    ByteArrayOutputStream objectByteArrayOutputStream;
     Uri imageFilePath;
-    EditText nama, breed, jk, umur, img;
+    EditText nama, breed, jk, umur, img, img_data;
     ImageView imageView;
     Button inputImg, save;
     Bitmap imageToStore;
@@ -53,14 +57,32 @@ public class AddHewan extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MyDatabaseHelper dbhewan = new MyDatabaseHelper(AddHewan.this);
+
+                byte[] img_data= addImage(new ModelClass(img.toString(),imageToStore));
+
                 dbhewan.addHewan(nama.getText().toString().trim(),
                         breed.getText().toString().trim(),
                         jk.getText().toString().trim(),
                         Integer.valueOf(umur.getText().toString().trim()),
-                        img.getText().toString().trim());
+                        img.getText().toString().trim(),
+                        img_data;
             }
         });
     }
+
+    public byte[] addImage(ModelClass objectModelClass){
+        try {
+            Bitmap imgToStoreBitmap = objectModelClass.getImage();
+
+            objectByteArrayOutputStream = new ByteArrayOutputStream();
+            imgToStoreBitmap.compress(Bitmap.CompressFormat.JPEG, 100,objectByteArrayOutputStream);
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        return objectByteArrayOutputStream.toByteArray();
+    }
+
     public void chooseImage(View objectView){
         try{
             Intent objectIntent = new Intent();

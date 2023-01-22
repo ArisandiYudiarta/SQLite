@@ -22,7 +22,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_BREED = "breed";
     private static final String COLUMN_GENDER = "jk";
     private static final String COLUMN_AGE = "umur";
-    private static final String COLUMN_IMAGE = "img";
+    private static final String COLUMN_IMAGE_NAME = "img_name";
+    private static final String COLUMN_IMAGE_FILE = "img_data";
 //    private static final String COLUMN_WEIGHT = "berat";
 //    private static final String COLUMN_HEIGHT = "tinggi";
 //    private static final String COLUMN_STORY = "pet_story";
@@ -42,7 +43,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                         COLUMN_BREED + " TEXT, " +
                         COLUMN_GENDER + " TEXT, " +
                         COLUMN_AGE + " INTEGER, " +
-                        COLUMN_IMAGE + " BLOB);";
+                        COLUMN_IMAGE_NAME + " TEXT, " +
+                        COLUMN_IMAGE_FILE + " BLOB);";
         db.execSQL(qTableHewanAdopsi);
     }
 
@@ -52,7 +54,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void addHewan(String nama, String breed, String jk, int umur, String img){
+    void addHewan(String nama, String breed, String jk, int umur, String img_name, byte[] img_data){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -60,7 +62,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_BREED, breed);
         cv.put(COLUMN_GENDER, jk);
         cv.put(COLUMN_AGE, umur);
-        cv.put(COLUMN_IMAGE, img);
+        cv.put(COLUMN_IMAGE_NAME, img_name);
+        cv.put(COLUMN_IMAGE_FILE, img_data);
 //        cv.put(COLUMN_WEIGHT, berat);
 //        cv.put(COLUMN_HEIGHT, tinggi);
 //        cv.put(COLUMN_STORY, story);
