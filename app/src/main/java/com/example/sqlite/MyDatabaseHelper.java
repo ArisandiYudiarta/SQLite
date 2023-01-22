@@ -2,6 +2,7 @@ package com.example.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_BREED = "breed";
     private static final String COLUMN_GENDER = "jk";
     private static final String COLUMN_AGE = "umur";
+    private static final String COLUMN_IMAGE = "img";
 //    private static final String COLUMN_WEIGHT = "berat";
 //    private static final String COLUMN_HEIGHT = "tinggi";
 //    private static final String COLUMN_STORY = "pet_story";
@@ -32,14 +34,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String qTableHistoryAdopsi = "CREATE TABLE ";
+        //String qTableHistoryAdopsi = "CREATE TABLE ";
 
         String qTableHewanAdopsi  = "CREATE TABLE " + TABLE_NAME +
                         " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_NAME + " TEXT, " +
                         COLUMN_BREED + " TEXT, " +
                         COLUMN_GENDER + " TEXT, " +
-                        COLUMN_AGE + " INTEGER);";
+                        COLUMN_AGE + " INTEGER, " +
+                        COLUMN_IMAGE + " BLOB);";
         db.execSQL(qTableHewanAdopsi);
     }
 
@@ -49,7 +52,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void addHewan(String nama, String breed, String jk, int umur){
+    void addHewan(String nama, String breed, String jk, int umur, String img){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -57,6 +60,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_BREED, breed);
         cv.put(COLUMN_GENDER, jk);
         cv.put(COLUMN_AGE, umur);
+        cv.put(COLUMN_IMAGE, img);
 //        cv.put(COLUMN_WEIGHT, berat);
 //        cv.put(COLUMN_HEIGHT, tinggi);
 //        cv.put(COLUMN_STORY, story);
@@ -66,5 +70,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }else{
             Toast.makeText(context, "Added Successfuly.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    Cursor readTblHewan(){
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
     }
 }
