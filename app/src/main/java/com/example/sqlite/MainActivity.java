@@ -1,6 +1,7 @@
 package com.example.sqlite;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton add_button;
 
     MyDatabaseHelper myDB;
-    ArrayList<String> id_hewan, nama_hewan, breed, jenis_kelamin, umur;
+
+    ArrayList<String> id_hewan, nama_hewan, breed, jk, umur;
+    RecyclerAdapter recyclerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,27 +37,30 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        myDB = new MyDatabaseHelper(MainActivity.this);
+        myDB = new MyDatabaseHelper( MainActivity.this);
         id_hewan = new ArrayList<>();
         nama_hewan = new ArrayList<>();
         breed = new ArrayList<>();
-        jenis_kelamin = new ArrayList<>();
+        jk = new ArrayList<>();
         umur = new ArrayList<>();
 
-        storeDatainArrays();
+        storeDataInArray();
+
+        recyclerAdapter = new RecyclerAdapter( MainActivity.this, id_hewan, nama_hewan, breed, jk, umur);
+        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
 
-    void storeDatainArrays(){
-        Cursor cursor = myDB.readAllData();
-        if (cursor.getCount() == 0){
-            Toast.makeText(this, "There is no data available", Toast.LENGTH_SHORT).show();
+    void storeDataInArray(){
+        Cursor cursor = myDB.readTblHewan();
+        if(cursor.getCount() == 0){
+            Toast.makeText(this, "Tidak Ada Data.", Toast.LENGTH_SHORT).show();
         }else{
-            while (cursor.moveToNext()){
+            while(cursor.moveToNext()){
                 id_hewan.add(cursor.getString(0));
                 nama_hewan.add(cursor.getString(1));
                 breed.add(cursor.getString(2));
-                jenis_kelamin.add(cursor.getString(3));
+                jk.add(cursor.getString(3));
                 umur.add(cursor.getString(4));
             }
         }

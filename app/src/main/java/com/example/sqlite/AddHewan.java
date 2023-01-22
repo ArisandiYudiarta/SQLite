@@ -1,39 +1,118 @@
 package com.example.sqlite;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.ColorSpace;
+import android.net.Uri;
 import android.os.Bundle;
+<<<<<<< HEAD
+=======
+import android.provider.MediaStore;
+>>>>>>> e99d379e12cf02c7fe8e4901c5ed860fc4d0c910
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
 
 public class AddHewan extends AppCompatActivity {
 
-    EditText nama, breed, jk, age, berat, tinggi, story;
-    Button clear, save;
+    private static final int PICK_IMAGE_REQUEST  = 100;
+    ByteArrayOutputStream objectByteArrayOutputStream;
+    Uri imageFilePath;
+    EditText nama, breed, jk, umur, img, img_data;
+    ImageView imageView;
+    Button inputImg, save;
+    Bitmap imageToStore;
+
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hewan);
 
+        imageView = (ImageView) findViewById(R.id.imageView);
+
         nama = findViewById(R.id.inputNama);
         breed = findViewById(R.id.inputBreed);
         jk = findViewById(R.id.inputGender);
-        age = findViewById(R.id.inputAge);
-        save = findViewById(R.id.btnSimpan);
+        umur = findViewById(R.id.inputAge);
+        try {
+            img = findViewById(R.id.inputLinkIMG);
+            imageView = findViewById(R.id.imageView);
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
 //        berat = findViewById(R.id.inputWeight);
 //        tinggi = findViewById(R.id.inputHeight);
 //        story = findViewById(R.id.inputStory);
 
+        save = findViewById(R.id.btnSimpan);
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyDatabaseHelper myDB = new MyDatabaseHelper(AddHewan.this);
-                myDB.addHewan(nama.getText().toString().trim(),
+                MyDatabaseHelper dbhewan = new MyDatabaseHelper(AddHewan.this);
+
+                byte[] img_data= addImage(new ModelClass(img.toString(),imageToStore));
+
+                dbhewan.addHewan(nama.getText().toString().trim(),
                         breed.getText().toString().trim(),
                         jk.getText().toString().trim(),
-                        Integer.parseInt(age.getText().toString().trim()));
+                        Integer.valueOf(umur.getText().toString().trim()),
+                        img.getText().toString().trim(),
+                        img_data;
             }
         });
+    }
+
+    public byte[] addImage(ModelClass objectModelClass){
+        try {
+            Bitmap imgToStoreBitmap = objectModelClass.getImage();
+
+            objectByteArrayOutputStream = new ByteArrayOutputStream();
+            imgToStoreBitmap.compress(Bitmap.CompressFormat.JPEG, 100,objectByteArrayOutputStream);
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        return objectByteArrayOutputStream.toByteArray();
+    }
+
+    public void chooseImage(View objectView){
+        try{
+            Intent objectIntent = new Intent();
+            objectIntent.setType ("image/*");
+
+            objectIntent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(objectIntent, PICK_IMAGE_REQUEST);
+
+
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        try{
+            super.onActivityResult(requestCode, resultCode, data);
+            if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+                imageFilePath = data.getData();
+                imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), imageFilePath);
+
+                imageView.setImageBitmap(imageToStore);
+            }
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+>>>>>>> e99d379e12cf02c7fe8e4901c5ed860fc4d0c910
     }
 }
