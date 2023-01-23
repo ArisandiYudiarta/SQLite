@@ -10,13 +10,13 @@
         android:id="@+id/inputNama"
         android:layout_width="280dp"
         android:layout_height="48dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
+        android:hint="Nama Hewan"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Nama Hewan"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,9 +26,9 @@
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="Jenis Hewan"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Jenis Hewan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,9 +40,9 @@
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="Jenis Kelamin"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Jenis Kelamin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputBreed" />
@@ -53,77 +53,66 @@
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="Umur Hewan"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Umur Hewan"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputGender" />
 
     <EditText
-        android:id="@+id/inputWeight"
+        android:id="@+id/inputLinkIMG"
         android:layout_width="280dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="76dp"
         android:ems="10"
+        android:hint="Img Text"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Berat Hewan"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputAge" />
-
-    <EditText
-        android:id="@+id/inputHeight"
-        android:layout_width="280dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:text="Tinggi Hewan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputWeight" />
-
-    <EditText
-        android:id="@+id/inputStory"
-        android:layout_width="280dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:text="Pet Story"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputHeight" />
+        app:layout_constraintTop_toBottomOf="@+id/inputGender" />
 
     <Button
-        android:id="@+id/btnClear"
+        android:id="@+id/btnInputImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="88dp"
-        android:layout_marginTop="48dp"
-        android:text="Clear"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="64dp"
+        android:text="Masukkan Gambar"
         android:textAllCaps="false"
+        android:onClick="chooseImage"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnSimpan"
-        app:layout_constraintHorizontal_bias="0.342"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputStory" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnSimpan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
+        android:layout_marginEnd="84dp"
         android:text="Simpan"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnClear" />
+        app:layout_constraintTop_toTopOf="@+id/btnInputImg" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="269dp"
+        android:layout_height="244dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputLinkIMG"
+        app:layout_constraintVertical_bias="0.0"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
